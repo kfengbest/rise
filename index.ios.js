@@ -4,7 +4,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -12,21 +12,12 @@ import {
   View
 } from 'react-native';
 
+import NavigatorIOSApp from './src/mainview.js';
+
 export default class rise extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+        <NavigatorIOSApp />
     );
   }
 }
