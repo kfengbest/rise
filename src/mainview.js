@@ -2,10 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { Navigator,NavigatorIOS, Text, View, TouchableHighlight } from 'react-native';
 
 //import HomeView from './homeview.js'
-var DashboardsList = require('./dashboardlist');
+var HomeView = require('./homeview');
 
 var QuestionsList1 = require('./QuestionsList1');
-var QuestionsCell = require('./QuestionsCell');
 
 
 var MainView = React.createClass({
@@ -14,7 +13,7 @@ var MainView = React.createClass({
     switch(route.id){
       case 'dashboard':
         return (
-          <QuestionsList1 />
+          <HomeView />
         );       
       default:
         return (<View />);

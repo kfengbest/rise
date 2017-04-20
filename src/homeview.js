@@ -10,7 +10,8 @@ import { Navigator,
         AsyncStorage } from 'react-native';
 
 
- var DashboardsList = require('./dashboardlist');
+var QuestionsList1 = require('./QuestionsList1');
+
 // var ProductList = require('./ProductList');
 
 var ACTIVE_PRODUCT_KEY = "current_product";
@@ -51,7 +52,7 @@ var HomeView = React.createClass({
   onProductPressed(){
     this.refs.nav.push({
       title:'products',
-      component: ProductList,
+      component: QuestionsList1,
       passProps: {onProductChanged: this.onProductChanged},
     });
   },
@@ -66,7 +67,7 @@ var HomeView = React.createClass({
           style = {styles.container}
           initialRoute={{
             title: this.state.product.title,
-            component: DashboardsList,
+            component: QuestionsList1,
             // leftButtonTitle: 'Products',
             // onLeftButtonPress: this.onProductPressed,
             passProps: {productId: this.state.product.id}
