@@ -19,7 +19,7 @@ import { Navigator,
 var Subscribable = require('Subscribable');
 var QuestionsCell = require('./QuestionsCell');
 
-//var QuestionsDetail = require('./QuestionsDetail');
+var QuestionsDetail = require('./QuestionsDetail');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
@@ -155,13 +155,13 @@ var QuestionsList1 = React.createClass({
 
   onCellSelected : function(message : Object){
 
-    // if (Platform.OS === 'ios') {
-    //   this.props.navigator.push({
-    //     title: "Message",
-    //     component: QuestionsDetail,
-    //     passProps: {message},
-    //   });
-    // }
+    if (Platform.OS === 'ios') {
+      this.props.navigator.push({
+        title: "Message",
+        component: QuestionsDetail,
+        passProps: {message},
+      });
+    }
   },
 
 });

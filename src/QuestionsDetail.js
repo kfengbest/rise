@@ -21,142 +21,17 @@ import { Navigator,
         ScrollView,
         AlertIOS } from 'react-native';
 
+var DEVICE_WIDTH=350
 
-var AnswerList = require('./AnswerList');
-var HTMLWebView = require('react-native-html-webview');
+//var AnswerList = require('./AnswerList');
+//var HTMLWebView = require('react-native-html-webview');
 var Gateway = require('./Gateway');
-var CreateCommentView = require('./CreateCommentView');
 var Config = require('./Config');
 var Communications = require('react-native-communications');
-var Dimensions = require('Dimensions');
-var DEVICE_WIDTH = Dimensions.get('window').width;
 var reactNativeStore = require('react-native-store');
 var EventEmitter = require('EventEmitter');
 
 
-var KudoButton = React.createClass({
-
-  onKudo(){
-    Gateway.createKudo(this.props.messageId, (res)=>{
-      if (res.status === 'success') {
-        var count = this.state.count;
-        count += 1;
-        this.setState({
-          count: count,
-          kudoed : true,
-        });
-      }else if (res.status==='error') {
-
-        if (res.error.code === 303) {
-          AlertIOS.alert(
-            'Error',
-            'You currently have no writable permission in mobile device, click OK button to send email to request permission?',
-            [
-              {text: 'OK', onPress: ()=>{
-                var subject = 'Request writable permission for ' + Gateway.session.last_login_data.userId;
-                var bodyText = 'Please grant writable permission for user ' + Gateway.session.last_login_data.userId + ' to access to Fusion 360 forum in mobile device. Thanks.';
-                var email = 'fusion360.forum.mobile.dev@autodesk.com';
-                Communications.email([email],null,null,subject,bodyText);
-              }},
-              {text: 'Cancel', onPress: ()=>{
-
-              }}
-            ]
-          ) 
-
-        }else{
-          AlertIOS.alert(
-            'Error',
-            res.error.message,
-            [
-              {text: 'OK', onPress: () => console.log('Foo Pressed!')},
-            ]
-          )                                        
-        }
-
-      }
-
-    });
-  },
-
-
-  getInitialState: function() {
-    return {
-      count: 0,
-      kudoed: false
-    };
-  },
-
-  componentDidMount() {
-    Gateway.kudosCount(this.props.messageId, (res)=>{
-      if (res && res.size) {
-        var size = res.size;
-        var curUserId = Gateway.session.last_login_data.userId;
-        var found = res.items.some((e)=>{return e.user.id === curUserId;});
-        this.setState({
-          count: size,
-          kudoed : found,
-        });
-      }
-    });
-  },
-
-  render(){
-    if (this.state.kudoed) {
-      return(
-        <Text style={styles.buttonTextDisabled}>{this.state.count}
-          <Text> Kudos</Text>
-        </Text>
-      );
-    }
-    return (
-      <TouchableOpacity 
-        onPress={this.onKudo}
-        style={styles.button}
-      >
-        <Text style={styles.buttonFont}>{this.state.count}
-          <Text> Kudos</Text>
-        </Text>
-
-      </TouchableOpacity>
-    );    
-  },
-});
-
-var CommentButton = React.createClass({
-  render(){
-    return (
-      <TouchableOpacity 
-        onPress={this.props.onComment}
-        style={styles.button}
-      >
-        <Text style={styles.buttonFont}>Comment
-        </Text>
-
-      </TouchableOpacity>
-    );    
-  },
-});
-
-var EmailButton = React.createClass({
-
-  onShare(){
-    var subject = this.props.message.subject;
-    var bodyText = "Please checkout this post in Fusion 360 community: " + this.props.message.view_href;
-    Communications.email(null,null,null,subject,bodyText);
-  },
-
-  render(){
-    return (
-      <TouchableOpacity 
-        onPress={this.onShare}
-        style={styles.button}
-      >
-        <Text style={styles.buttonFont}>Share</Text>
-      </TouchableOpacity>
-    );    
-  },
-});
 
 var QuestionsDetail = React.createClass({
 
@@ -172,151 +47,9 @@ var QuestionsDetail = React.createClass({
   },
 
   componentDidMount() {
-    this.checkInFavoriteList().done();
-    this.markAsRead(this.props.message);
+
   },
 
-  async checkInFavoriteList() {
-    var key = this.props.message.id;
-    var that = this;
-    reactNativeStore.model(Config.TB_FAVORITES).then((db)=>{
-      db.find({id:key}).then((data)=>{
-        var isFav = data.length > 0 ? true : false;
-        var title = isFav? "UnFavorite" : "Favorite";
-        that.setState({
-            inFavoriteList: isFav,
-            favTitle: title,
-          });
-      });
-    });
-  },
-
-  // move the mark as saved state from cell to detail view
-  // in order to improve the performance.
-  async markAsRead(message) {
-
-    var item = {
-      id: message.id,
-      messages_count: message.conversation.messages_count
-    }
-
-    reactNativeStore.model(Config.TB_READED).then((db)=>{
-      db.find({id:message.id}).then((data)=>{
-        if (data.length> 0) {
-          db.update(item, {id:message.id});
-        }else{
-          db.add(item);
-        }
-      });
-    });
-  },  
-
-  async onFavoritePressed() {
-
-    var key = this.props.message.id;
-    var item = this.props.message;
-    var that = this;
-
-    reactNativeStore.model(Config.TB_FAVORITES).then(function(db){
-
-      db.find({id:key}).then(function(data){
-        if (data.length > 0) {
-          db.remove({id:key});
-          that.setState({
-            inFavoriteList: false,
-            favTitle: "Favorite",
-          });
-        }else{
-          db.add(item).then(()=>{
-            that.setState({
-              inFavoriteList: true,
-              favTitle: "UnFavorite",
-            });
-          });
-        }
-      });
-    });
-  },
-
-  onCommentChanged(text){
-    this.setState({
-      newComment: text,
-    });
-  },
-
-  onComment() {
-      var that = this;
-
-      this.props.navigator.push({
-        title: "Comment",
-        component: CreateCommentView,
-        leftButtonTitle: 'cancel',
-        onLeftButtonPress: ()=> {
-          this.setState({
-            newComment: '',
-          })
-          this.props.navigator.pop();
-        },
-        rightButtonTitle: 'done',
-        onRightButtonPress: ()=>{
-          if (this.state.newComment) {
-            var encodedComment = this.state.newComment;
-            var regRN = /\n/g;
-            encodedComment = encodedComment.replace(regRN,"<br />");
-
-            Gateway.createComment(that.props.message.board.id, 
-                                  this.props.message.id,
-                                  'RE: ' + this.props.message.subject,
-                                  encodedComment,
-                                  (res)=>{
-                                    if (res.status==='error') {
-
-                                      if (res.error.code === 303) {
-                                        AlertIOS.alert(
-                                          'Error',
-                                          'You currently have no writable permission in mobile device, click OK button to send email to request permission?',
-                                          [
-                                            {text: 'OK', onPress: ()=>{
-                                              var subject = 'Request writable permission for ' + Gateway.session.last_login_data.userId;
-                                              var bodyText = 'Please grant writable permission for user ' + Gateway.session.last_login_data.userId + ' to access to Fusion 360 forum in mobile device. Thanks.';
-                                              var email = 'fusion360.forum.mobile.dev@autodesk.com';
-                                              Communications.email([email],null,null,subject,bodyText);
-                                            }},
-                                            {text: 'Cancel', onPress: ()=>{
-
-                                            }}
-                                          ]
-                                        ) 
-
-                                      }else{
-                                        AlertIOS.alert(
-                                          'Error',
-                                          res.error.message,
-                                          [
-                                            {text: 'OK', onPress: () => console.log('Foo Pressed!')},
-                                          ]
-                                        )                                        
-                                      }
-
-                                    }else if (res.status==='success') {
-                                      that.state.eventEmitter.emit('newCommentEvent', res.message);
-                                      this.setState({
-                                        newComment: '',
-                                      })
-                                      this.props.navigator.pop();
-                                    }
-                                  }
-                                );
-          }
-
-        },
-        passProps: {onTextChanged:this.onCommentChanged},
-      });
-  },
-
-  async onKudo(){
-    
-  },
   
   render: function() {
 
@@ -324,47 +57,16 @@ var QuestionsDetail = React.createClass({
 
     return (
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>{this.props.message.subject}</Text>
+        <Text style={styles.title}>"this.props.message.subject"</Text>
 
         <View style={styles.qAuthor}>
           <Image 
             source={{uri:profileUrl}}
             style={styles.qAuthorProfile}
           />
-          <Text style={styles.qAuthorName}>{this.props.message.author.login}</Text>
+          <Text style={styles.qAuthorName}>"this.props.message.author.login"</Text>
           <Text style={styles.qAuthorTitle}></Text>
         </View> 
-
-        <HTMLWebView 
-          html={this.props.message.body} 
-          style={styles.webView}
-          autoHeight={true}
-        />
-
-        <View style={styles.separator} />
-        <View style={styles.toolBar}>
-          <TouchableOpacity 
-            onPress={this.onFavoritePressed}
-            style={styles.button}
-          >
-            <Text style={styles.buttonFont}>{this.state.favTitle}</Text>
-          </TouchableOpacity>
-          <KudoButton messageId={this.props.message.id}/>
-          <CommentButton 
-            onComment={this.onComment} 
-            count={this.props.message.conversation.messages_count}
-          />
-          <EmailButton 
-            message={this.props.message}
-          />          
-        </View>
-        <View style={styles.separator} />
-        <AnswerList 
-          messageid={this.props.message.id}
-          boardid={this.props.message.board.id} 
-          events={this.state.eventEmitter} 
-        />
-        <View style={styles.separator} />
       </ScrollView>
     );
   },
