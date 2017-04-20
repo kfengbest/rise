@@ -1,0 +1,1 @@
+{"msg":{"id":180,"topic":"准备完整介绍","description":"根据引起兴趣、证明卖点、总结并提出要求的结构，串起一个完整的自我介绍","knowledgeId":30,"sceneId":1,"difficulty":2,"problemId":7,"sequence":2,"del":false,"practiceUid":"TT007D005B007Y01002","content":null,"submitId":3848,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

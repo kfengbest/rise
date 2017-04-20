@@ -1,0 +1,1 @@
+{"msg":{"id":102,"topic":"用Kano模型分析贵公司产品","description":"分析自己所在公司或者实习公司的产品／服务，按Kano模型分析用户需求。","knowledgeId":48,"sceneId":1,"difficulty":2,"problemId":10,"sequence":4,"del":false,"practiceUid":"TT010G002B007Y01004","content":null,"submitId":3670,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

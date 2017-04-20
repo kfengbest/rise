@@ -1,0 +1,1 @@
+{"msg":{"id":68,"topic":"用滑坡谬误识别谣言","description":"翻翻朋友圈或网络热文，看看哪些危言耸听的说法实际是作者使用滑坡谬误的伎俩在误导受众，你能识破他们吗？","knowledgeId":13,"sceneId":1,"difficulty":2,"problemId":5,"sequence":6,"del":false,"practiceUid":"TT005B006A006Y01006","content":null,"submitId":3760,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

@@ -40,7 +40,7 @@ export default class DashboardCell extends Component {
         return (
             <TouchableHighlight onPress={this.props.onSelected}>
                 <View style={styles.dbditem}>
-                    <Text style={styles.dbditemtitle}>{this.dbd}</Text>
+                    <Text style={styles.dbditemtitle}>{this.dbd.name}</Text>
                 </View>
             </TouchableHighlight>
         )

@@ -1,0 +1,1 @@
+{"msg":{"id":120,"topic":"分析牛人牛在哪里","description":"找一个你工作中比较欣赏的，在工作领域里出类拔萃的人，从中你能分析总结出什么他有什么特质？具备什么能力？","knowledgeId":55,"sceneId":1,"difficulty":2,"problemId":11,"sequence":6,"del":false,"practiceUid":"TT011G008B007Y01006","content":null,"submitId":3805,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

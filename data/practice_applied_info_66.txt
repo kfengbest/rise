@@ -1,0 +1,1 @@
+{"msg":{"id":66,"topic":"政客的“人身攻击谬误”","description":"根据你的记忆或者资料，整理一下在2016年美国大选过程中，两位候选人各自对对方做了哪些人身攻击。","knowledgeId":12,"sceneId":1,"difficulty":2,"problemId":5,"sequence":5,"del":true,"practiceUid":"T005B005E005Y01005","content":null,"submitId":3758,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

@@ -1,0 +1,1 @@
+{"msg":{"id":122,"topic":"知能愿反思无法坚持学习的原因","description":"你是否能够每天坚持花半小时时间进行业余学习（比如学习圈外RISE课程，读书等）？能还是不能呢？请用知能愿分析原因","knowledgeId":56,"sceneId":1,"difficulty":2,"problemId":11,"sequence":8,"del":false,"practiceUid":"TT011G009B004Y01008","content":null,"submitId":3807,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

@@ -14,14 +14,21 @@ import {
 
 import DashboardCell from './dashboardcell'
 
+import unchoosenData from '../data/unchoosen.json';  
+
 export default class DashboardsList extends Component {
 
     constructor (props) {
         super(props);
-        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2,
+                                          sectionHeaderHasChanged: (s1, s2) => s1 !== s2
+                                        });
         this.state = {
             refreshing: false,
-            dataSource: ds.cloneWithRows([ 'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin']),
+            dataSource: ds.cloneWithRowsAndSections({
+        'section1': ['1'],
+        'section2': ['row 1', 'row 2', 'row 1', 'row 2', 'row 1', 'row 2', 'row 1', 'row 2', 'row 1', 'row 2', 'row 1', 'row 2']
+      }),
         };
 
     }
@@ -54,6 +61,17 @@ export default class DashboardsList extends Component {
         );
     }
 
+    _renderSectionHeader(data, sectionID){
+        if (sectionID === 'section1') {
+            return null
+        }
+        return (
+          <View style={styles.section}>
+            <View ><Text>category 1</Text></View>
+          </View>
+        );
+    }
+
     _onRefresh () {
 
     }
@@ -64,6 +82,7 @@ export default class DashboardsList extends Component {
                 enableEmptySections={true}
                 dataSource={this.state.dataSource}
                 renderRow={this._renderRow.bind(this)}
+                renderSectionHeader={this._renderSectionHeader.bind(this)}
                 refreshControl={
                     <RefreshControl
                     refreshing={this.state.refreshing}
@@ -74,3 +93,20 @@ export default class DashboardsList extends Component {
         )
     }
 }
+
+var styles = StyleSheet.create({
+  list: {
+    marginTop: 64,
+  },
+  row: {
+    height: 50,
+    backgroundColor: 'white'
+  },
+  section: {
+    height: 30,
+    backgroundColor: 'green',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  }
+});

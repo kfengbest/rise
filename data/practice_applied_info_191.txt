@@ -1,0 +1,1 @@
+{"msg":{"id":191,"topic":"准备对缺点的回答","description":"“你最大的缺点是什么”，结合目标职位的核心能力和自己的真实情况诚实作答吧，不要忘记提到你会如何改进哦！","knowledgeId":33,"sceneId":1,"difficulty":2,"problemId":7,"sequence":7,"del":false,"practiceUid":"TT007D008B007Y01007","content":null,"submitId":3860,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

@@ -1,0 +1,1 @@
+{"msg":{"id":183,"topic":"跟朋友一起准备","description":"根据你朋友要面试的岗位，帮ta看看可能会被问到的SBI（结构化行为面试）问题","knowledgeId":42,"sceneId":1,"difficulty":2,"problemId":7,"sequence":4,"del":false,"practiceUid":"TT007D018B007Y01004","content":null,"submitId":3852,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

@@ -1,0 +1,1 @@
+{"msg":{"id":167,"topic":"完善自己的理由","description":"针对自己坚信的一个观点，列举出所有的理由，检查每一条理由的准确性，并看看是否还有其他理由。","knowledgeId":27,"sceneId":1,"difficulty":2,"problemId":12,"sequence":6,"del":true,"practiceUid":"T012B012E001Y01006","content":null,"submitId":3835,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

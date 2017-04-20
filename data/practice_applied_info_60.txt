@@ -1,0 +1,1 @@
+{"msg":{"id":60,"topic":"感受个人价值观对事实的过滤作用","description":"找一则长短适宜的新闻给3位朋友看，然后让他复述这则新闻，感受一下不同人对事实的过滤作用。","knowledgeId":11,"sceneId":1,"difficulty":3,"problemId":12,"sequence":5,"del":true,"practiceUid":"T012B004E001Y01005","content":null,"submitId":3752,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

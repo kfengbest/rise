@@ -1,0 +1,1 @@
+{"msg":{"id":186,"topic":"准备故事库","description":"针对职位要求的能力，比如领导能力、沟通能力、组织能力、创造力分别从过往经历中找到最适合说明的1-2个故事。每次练习一个点！","knowledgeId":31,"sceneId":1,"difficulty":2,"problemId":7,"sequence":6,"del":false,"practiceUid":"TT007D006B007Y01006","content":null,"submitId":3855,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

@@ -12,12 +12,15 @@ import {
   View
 } from 'react-native';
 
-import NavigatorIOSApp from './src/mainview.js';
+//import NavigatorIOSApp from './src/mainview.js';
+
+var MainView = require('./src/mainview');
+
 
 export default class rise extends Component {
   render() {
     return (
-        <NavigatorIOSApp />
+        <MainView />
     );
   }
 }

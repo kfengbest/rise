@@ -1,0 +1,1 @@
+{"msg":{"id":22,"topic":"用两种逻辑顺序制定工作计划","description":"年末总结，年初计划是每个职场人的必修课。请尝试在今年的工作计划中使用两种以上的逻辑顺序进行陈述吧。","knowledgeId":5,"sceneId":1,"difficulty":2,"problemId":1,"sequence":16,"del":false,"practiceUid":"Z001T001Z001B004Y01016","content":null,"submitId":3701,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

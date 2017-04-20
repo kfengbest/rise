@@ -1,0 +1,1 @@
+{"msg":{"id":8,"topic":"用时间顺序总结工作，制定计划","description":"按照时间顺序回顾你今天的工作，或计划明天的工作。","knowledgeId":2,"sceneId":1,"difficulty":2,"problemId":1,"sequence":4,"del":true,"practiceUid":"T001A002B004Y01004","content":null,"submitId":3686,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

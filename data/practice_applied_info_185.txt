@@ -1,0 +1,1 @@
+{"msg":{"id":185,"topic":"STAR描述练习","description":"试试看用STAR原则描述一个你化解团队冲突的故事吧！","knowledgeId":31,"sceneId":1,"difficulty":2,"problemId":7,"sequence":5,"del":false,"practiceUid":"TT007D006B007Y01005","content":null,"submitId":3854,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

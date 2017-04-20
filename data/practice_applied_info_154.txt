@@ -1,0 +1,1 @@
+{"msg":{"id":154,"topic":"公司里的关联","description":"谷歌公司一直是创业公司的模仿对象，选取谷歌在管理或业绩上的两个特点，看看两者之间有哪些关联关系。比如，免费午餐和优秀的员工。","knowledgeId":29,"sceneId":1,"difficulty":2,"problemId":5,"sequence":3,"del":true,"practiceUid":"T005B014E004Y01003","content":null,"submitId":3822,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

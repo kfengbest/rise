@@ -1,0 +1,1 @@
+{"msg":{"id":31,"topic":"概括主题，做有思想的工作汇报","description":"拿出一篇你近期的工作汇报，检查主题是否有思想的，是对正文内容的提炼和概括，如果不是，尝试进行修改哦。","knowledgeId":7,"sceneId":1,"difficulty":2,"problemId":1,"sequence":14,"del":false,"practiceUid":"TT001A007B002Y01014","content":null,"submitId":3723,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}

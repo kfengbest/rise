@@ -1,0 +1,1 @@
+{"msg":{"id":64,"topic":"找找商业评论中的人身攻击谬误","description":"找一篇针对商业人物的评论，看看文中是否有对人不对事的人身攻击。有的话列举出来，看看有多少。","knowledgeId":12,"sceneId":1,"difficulty":2,"problemId":5,"sequence":3,"del":true,"practiceUid":"T005B005C004Y01003","content":null,"submitId":3756,"submitUpdateTime":"2017-03-24","voteCount":0,"commentCount":0,"voteStatus":0,"picList":[],"planId":967},"code":200}
