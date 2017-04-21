@@ -17,17 +17,18 @@ import { Navigator,
         PixelRatio } from 'react-native';
 
 var Subscribable = require('Subscribable');
-var QuestionsCell = require('./QuestionsCell');
+var PracticeCell = require('./PracticeCell');
 
-var QuestionsDetail = require('./QuestionsDetail');
-var ChapterList = require('./ChapterList');
+var AnswerList = require('./AnswerList');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-import unchoosenData from '../data/unchoosen.json';  
+      var infoName = '../data/practices/infos/practice_applied_info_1.json';
+      //var infoJson = require(infoName);
+//import infoJson from '../data/practices/infos/practice_applied_info_1.json';
+//      var infoJson = require('../data/practices/infos/practice_applied_info_1.json');
 
-
-var QuestionsList1 = React.createClass({
+var PracticeList = React.createClass({
 
   mixins: [Subscribable.Mixin],
 
@@ -45,13 +46,18 @@ var QuestionsList1 = React.createClass({
   reloadData() {
     this.state.noMore = false;
 
-    var items = [];
-    var offset = 0;
-    unchoosenData.msg.catalogList.forEach(function(e){
-      items = items.concat(e.problemList);
-    })
-    this.updateDataSourceHandler(items, offset);
+    debugger;
 
+    var practicesIds = this.props.practices;
+    var items = [];
+    practicesIds.forEach(function(e){
+      var infoName = '../data/practices/infos/practice_applied_info_1.json';
+      //var infoJson = require(infoName);
+      var infoJson = require('../data/practices/infos/practice_applied_info_1.json');
+      items.push(infoJson);
+    });
+
+    this.updateDataSourceHandler(items, 0);
   },
 
   appendData() {
@@ -152,7 +158,7 @@ var QuestionsList1 = React.createClass({
 
   renderCell(question) {
     return (
-      <QuestionsCell 
+      <PracticeCell 
         onSelect={() => this.onCellSelected(question)}
         question={question}
       />
@@ -165,7 +171,7 @@ var QuestionsList1 = React.createClass({
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: "Message",
-        component: ChapterList,
+        component: AnswerList,
         passProps: {message},
       });
     }
@@ -207,4 +213,4 @@ var styles = StyleSheet.create({
   },  
 });
 
-module.exports = QuestionsList1;
+module.exports = PracticeList;

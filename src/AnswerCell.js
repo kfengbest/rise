@@ -25,7 +25,7 @@ var reactNativeStore = require('react-native-store');
  var Subscribable = require('Subscribable');
 // var RefreshableListView = require('react-native-refreshable-listview');
 
-var QuestionsCell = React.createClass({
+var AnswerCell = React.createClass({
 
   propTypes: {
     question: React.PropTypes.object,
@@ -98,12 +98,12 @@ var QuestionsCell = React.createClass({
       TouchableElement = TouchableNativeFeedback;
     }
 
-    var desc = this.props.question.description || "";
+    var desc = this.props.question.content || "";
     var regex = /(&nbsp;|<([^>]+)>)/ig;
     desc = desc.replace(regex, "");
 
     var readOrNot = this.state.readed ? styles.circleRead : styles.circleUnread;
-    var latestDate = "1 min ago";//moment(this.props.question.conversation.last_post_time).fromNow();
+    var latestDate = moment(this.props.question.submitUpdateTime).fromNow();
     
     return (
       <View>
@@ -118,13 +118,12 @@ var QuestionsCell = React.createClass({
             <View style={styles.flexCell}>
               <View style={styles.flexCreatorCell}>
                 <Text style={styles.qcreatorText}>
-                  "id:" {this.props.question.id}
+                  {this.props.question.userName}
                   {' '}&bull;{' '}
-                  <Text>{this.props.question.catalogId}</Text>                
+                  <Text>"2014"</Text>                
                 </Text>
               </View>            
-              <Text style={styles.qTitle} numberOfLines={2}>{this.props.question.problem}</Text>
-              <Text style={styles.qDescription} numberOfLines={2}>{desc}</Text>
+              <Text style={styles.qDescription} numberOfLines={100}>{desc}</Text>
               <Text style={styles.qLatestText} numberOfLines={1}>
                   <Text style={styles.qViewsNum}>{latestDate}</Text>
               </Text>            
@@ -272,4 +271,4 @@ var styles = StyleSheet.create({
   
 });
 
-module.exports = QuestionsCell;
+module.exports = AnswerCell;

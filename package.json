@@ -1,30 +1,31 @@
 {
-	"name": "rise",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node node_modules/react-native/local-cli/cli.js start",
-		"test": "jest"
-	},
-	"dependencies": {
-		"react": "16.0.0-alpha.6",
-		"react-native": "0.43.3",
-		"react-native-communications": "0.0.6",
-    	"react-native-html-webview": "0.0.14",
-    	"react-native-refreshable-listview": "^1.3.0",
-    	"underscore": "^1.8.3",
-    	"url": "^0.11.0",
-    	"xmldom": "^0.1.19",
-    	"react-native-store": "0.0.9",
-    	"react-timer-mixin": "^0.13.3"
-	},
-	"devDependencies": {
-		"babel-jest": "19.0.0",
-		"babel-preset-react-native": "1.9.1",
-		"jest": "19.0.2",
-		"react-test-renderer": "16.0.0-alpha.6"
-	},
-	"jest": {
-		"preset": "react-native"
-	}
+  "name": "rise",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@remobile/react-native-cordova": "^1.1.1",
+    "@remobile/react-native-file": "^1.0.3",
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.43.3",
+    "react-native-communications": "0.0.6",
+    "react-native-htmlview": "^0.9.0",
+    "react-native-store": "0.0.9",
+    "react-timer-mixin": "^0.13.3",
+    "underscore": "^1.8.3",
+    "url": "^0.11.0",
+    "xmldom": "^0.1.19"
+  },
+  "devDependencies": {
+    "babel-jest": "19.0.0",
+    "babel-preset-react-native": "1.9.1",
+    "jest": "19.0.2",
+    "react-test-renderer": "16.0.0-alpha.6"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
 }

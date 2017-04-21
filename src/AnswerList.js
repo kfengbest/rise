@@ -17,17 +17,16 @@ import { Navigator,
         PixelRatio } from 'react-native';
 
 var Subscribable = require('Subscribable');
-var QuestionsCell = require('./QuestionsCell');
+var AnswerCell = require('./AnswerCell');
 
 var QuestionsDetail = require('./QuestionsDetail');
-var ChapterList = require('./ChapterList');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-import unchoosenData from '../data/unchoosen.json';  
+import AnswersData from '../data/practices/practice_applied_answer_1_1.json';  
 
 
-var QuestionsList1 = React.createClass({
+var AnswerList = React.createClass({
 
   mixins: [Subscribable.Mixin],
 
@@ -45,12 +44,7 @@ var QuestionsList1 = React.createClass({
   reloadData() {
     this.state.noMore = false;
 
-    var items = [];
-    var offset = 0;
-    unchoosenData.msg.catalogList.forEach(function(e){
-      items = items.concat(e.problemList);
-    })
-    this.updateDataSourceHandler(items, offset);
+    this.updateDataSourceHandler(AnswersData.msg.list, 0);
 
   },
 
@@ -152,7 +146,7 @@ var QuestionsList1 = React.createClass({
 
   renderCell(question) {
     return (
-      <QuestionsCell 
+      <AnswerCell 
         onSelect={() => this.onCellSelected(question)}
         question={question}
       />
@@ -165,7 +159,7 @@ var QuestionsList1 = React.createClass({
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: "Message",
-        component: ChapterList,
+        component: QuestionsDetail,
         passProps: {message},
       });
     }
@@ -207,4 +201,4 @@ var styles = StyleSheet.create({
   },  
 });
 
-module.exports = QuestionsList1;
+module.exports = AnswerList;

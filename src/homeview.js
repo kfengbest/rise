@@ -27,7 +27,7 @@ var HomeView = React.createClass({
     // var currentProduct = this.loadProduct().done();
     var defaultProduct = {
       id: '1234',
-      title: 'Fusion360',
+      title: 'RISE',
     };
     // currentProduct = currentProduct || defaultProduct;
 

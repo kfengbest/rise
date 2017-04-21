@@ -24,7 +24,8 @@ import { Navigator,
 var DEVICE_WIDTH=350
 
 //var AnswerList = require('./AnswerList');
-//var HTMLWebView = require('react-native-html-webview');
+import HTMLView from 'react-native-htmlview';
+
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 var Communications = require('react-native-communications');
@@ -53,26 +54,41 @@ var QuestionsDetail = React.createClass({
   
   render: function() {
 
-    var profileUrl = "http://autodesk.i.lithium.com/t5/image/serverpage/image-id/157676i2FEB2498C7211AD4/image-dimensions/60x60/image-coordinates/0%2C0%2C394%2C394?v=mpbl-1";
+    var desc = this.props.message.content || "";
+    var regex = /(&nbsp;|<([^>]+)>)/ig;
+    desc = desc.replace(regex, "");
 
     return (
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <Text style={styles.title}>"this.props.message.subject"</Text>
-
-        <View style={styles.qAuthor}>
-          <Image 
-            source={{uri:profileUrl}}
-            style={styles.qAuthorProfile}
-          />
-          <Text style={styles.qAuthorName}>"this.props.message.author.login"</Text>
-          <Text style={styles.qAuthorTitle}></Text>
-        </View> 
-      </ScrollView>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.flexContainer}>
+            <View style={styles.flexCell}>
+              <View style={styles.flexCreatorCell}>
+                <Text style={styles.qcreatorText}>
+                  {this.props.message.userName}
+                  {' '}&bull;{' '}
+                  <Text>"2014"</Text>                
+                </Text>
+              </View>            
+              <Text style={styles.qDescription} numberOfLines={500}>{desc}</Text>           
+            </View>                      
+          </View>
+        </ScrollView>
     );
   },
 });
 
 var styles = StyleSheet.create({
+  flexContainer:{
+    flexDirection: 'column',
+    backgroundColor: 'white',
+  },
+  flexCell:{
+    flexDirection: 'column',
+    marginLeft: 24,
+    marginTop: 5,
+    marginBottom: 5,
+    marginRight: 5,
+  },
   contentContainer: {
     padding: 10,
   },

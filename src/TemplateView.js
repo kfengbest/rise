@@ -8,6 +8,7 @@ import {
   View
 } from 'react-native';
 
+
 var TemplateView = React.createClass({
     
   getInitialState: function() {

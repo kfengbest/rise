@@ -17,17 +17,16 @@ import { Navigator,
         PixelRatio } from 'react-native';
 
 var Subscribable = require('Subscribable');
-var QuestionsCell = require('./QuestionsCell');
+var ChapterCell = require('./ChapterCell');
 
-var QuestionsDetail = require('./QuestionsDetail');
-var ChapterList = require('./ChapterList');
+var PracticeList = require('./PracticeList');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-import unchoosenData from '../data/unchoosen.json';  
+import KnowledgePractices from '../data/knowledge_practices.json';  
 
 
-var QuestionsList1 = React.createClass({
+var ChapterList = React.createClass({
 
   mixins: [Subscribable.Mixin],
 
@@ -45,11 +44,9 @@ var QuestionsList1 = React.createClass({
   reloadData() {
     this.state.noMore = false;
 
-    var items = [];
+    var items = this.props.message.chapterList;
     var offset = 0;
-    unchoosenData.msg.catalogList.forEach(function(e){
-      items = items.concat(e.problemList);
-    })
+
     this.updateDataSourceHandler(items, offset);
 
   },
@@ -151,8 +148,9 @@ var QuestionsList1 = React.createClass({
   },
 
   renderCell(question) {
+
     return (
-      <QuestionsCell 
+      <ChapterCell 
         onSelect={() => this.onCellSelected(question)}
         question={question}
       />
@@ -162,11 +160,14 @@ var QuestionsList1 = React.createClass({
 
   onCellSelected : function(message : Object){
 
+    var knowId = message.sections[0].knowledge.id;
+    var practices = KnowledgePractices[knowId];
+
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
         title: "Message",
-        component: ChapterList,
-        passProps: {message},
+        component: PracticeList,
+        passProps: {practices},
       });
     }
   },
@@ -207,4 +208,4 @@ var styles = StyleSheet.create({
   },  
 });
 
-module.exports = QuestionsList1;
+module.exports = ChapterList;
