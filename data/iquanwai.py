@@ -1,6 +1,7 @@
 import urllib2
 import time
 import json
+import os
 
 from random import Random
 
@@ -220,6 +221,55 @@ def loadAllAppliedPractices():
         time.sleep(1)
         print str(i)
 
+def rename():
+    path = '/Users/fengka/Sites/rise/data/files';
+    filelist=os.listdir(path);
+    for files in filelist:
+        olddir=os.path.join(path,files);
+        filename=os.path.splitext(files)[0]; 
+        filetype=os.path.splitext(files)[1];
+        print filename;
+        print filetype;
+        newdir=os.path.join(path,filename+".json");
+        print newdir;
+        os.rename(olddir,newdir);
+
+def loadJson(filePath):
+    dashboardHandler = open(filePath,'r');
+    dashboardContent = dashboardHandler.read();
+    dashboardJson = json.loads(dashboardContent);
+    dashboardHandler.close();
+    return dashboardJson;
+
+def extractAndMapIds():
+ #   dashboardFile='/Users/fengka/Sites/rise/data/unchoosen.json';
+ #   dashboardJson = loadJson(dashboardFile);
+ #   print dashboardJson['msg']['name'];
+
+    #{'49':[101,102]}
+    dic = {};
+    path = '/Users/fengka/Sites/rise/data/practices/infos';
+    filelist=os.listdir(path);
+    for files in filelist:
+        fileDir=os.path.join(path,files);
+
+        fileJson = loadJson(fileDir);
+        klId = fileJson['msg']['knowledgeId'];
+        pracId = fileJson['msg']['id'];
+        
+        if dic.has_key(klId):
+            dic[klId].append(pracId);
+        else:
+            dic[klId] = [pracId];
+
+    dicJs = json.dumps(dic);
+    dicFile = open('dicmap.json','w');
+    dicFile.write(dicJs);
+    dicFile.close();
+            
+
+
+
 
 
 #loadUnchoosen()
@@ -229,7 +279,10 @@ def loadAllAppliedPractices():
 #loadPracticeUnderstand(51613)
 #loadPracticeAppliedInfo(117)
 #loadPracticeAppliedAnswer(117,1)
+#rename();
 
-loadAllAppliedPractices()
+#loadAllAppliedPractices()
+
+extractAndMapIds();
 
 
