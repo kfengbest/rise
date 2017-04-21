@@ -24,6 +24,7 @@ var Gateway = require('./Gateway');
 var Config = require('./Config');
 
 import AnswersData from '../data/practices/practice_applied_answer_1_1.json';  
+import RNFetchBlob from 'react-native-fetch-blob'
 
 
 var AnswerList = React.createClass({
@@ -43,13 +44,28 @@ var AnswerList = React.createClass({
 
   reloadData() {
     this.state.noMore = false;
-
-    this.updateDataSourceHandler(AnswersData.msg.list, 0);
-
+    this.appendData(1);
   },
 
-  appendData() {
-    console.log("listview appendData");
+  appendData(offsetInt) {
+    const dirs = RNFetchBlob.fs.dirs;
+    var pId = this.props.message.msg.id;
+    var answerName = '/practice_applied_answer_' + pId + '_' + offsetInt.toString() + '.json';
+    const filePath = dirs.MainBundleDir + answerName;
+    var that = this;
+    console.log(answerName);
+    
+    RNFetchBlob.fs.readFile(filePath, 'utf8')
+      .then((data) => {
+        data = JSON.parse(data);
+        that.state.cache.items.push(...data.msg.list);
+        that.updateDataSourceHandler(that.state.cache.items, 0);
+
+        if (data.msg.end === false) {
+          that.appendData(offsetInt+1);
+        }
+
+      });
   },
 
   reloadMostViewedInNDays(append){

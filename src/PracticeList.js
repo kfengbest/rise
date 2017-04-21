@@ -23,10 +23,8 @@ var AnswerList = require('./AnswerList');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-      var infoName = '../data/practices/infos/practice_applied_info_1.json';
-      //var infoJson = require(infoName);
-//import infoJson from '../data/practices/infos/practice_applied_info_1.json';
-//      var infoJson = require('../data/practices/infos/practice_applied_info_1.json');
+import RNFetchBlob from 'react-native-fetch-blob'
+
 
 var PracticeList = React.createClass({
 
@@ -46,18 +44,27 @@ var PracticeList = React.createClass({
   reloadData() {
     this.state.noMore = false;
 
-    debugger;
-
     var practicesIds = this.props.practices;
-    var items = [];
+    const dirs = RNFetchBlob.fs.dirs;
+
+    var that = this;
     practicesIds.forEach(function(e){
-      var infoName = '../data/practices/infos/practice_applied_info_1.json';
-      //var infoJson = require(infoName);
-      var infoJson = require('../data/practices/infos/practice_applied_info_1.json');
-      items.push(infoJson);
+      var infoName = '/practice_applied_info_' + e + '.json';
+      const filePath = dirs.MainBundleDir + infoName;
+      console.log(infoName);
+
+      RNFetchBlob.fs.readFile(filePath, 'utf8')
+      .then((data) => {
+        // handle the data ..
+        data = JSON.parse(data);
+
+        that.state.cache.items.push(data);
+
+        that.updateDataSourceHandler(that.state.cache.items, 0);
+      });
+
     });
 
-    this.updateDataSourceHandler(items, 0);
   },
 
   appendData() {
