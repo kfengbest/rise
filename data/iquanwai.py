@@ -312,36 +312,32 @@ def uniqueUnderstandPracticeIds():
     srcDir = '/Users/fengka/Sites/rise/data/understands';
     destDir = '/Users/fengka/Sites/rise/data/uniqueunderstands';
     filelist=os.listdir(srcDir);
-    for files in filelist:
-        fileDir=os.path.join(srcDir,files);
-        uniqueDestFileDir = os.path.join(destDir,files);
+    for filename in filelist:
+        srcFileFullPath=os.path.join(srcDir,filename);
+        destFileFullPathUnique = os.path.join(destDir,filename);
 
-        fileJson = loadJson(fileDir);
+        fileJson = loadJson(srcFileFullPath);
 
         practiceArr = fileJson['msg']['practice'];
         for practice in practiceArr:
             klId = practice['knowledgeId'];
-            pracId = practice['id'];
-            
-            obj = {'practiceId': pracId, 'file': files};
-
-            print obj;
-
+            pracId = practice['id'];            
+            question = practice['question'];
             if cacheDic.has_key(pracId):
-                print str(pracId) + "  " + files;
+                print str(pracId) + "  " + filename;
             else:
                 # put into cache
-                cacheDic[pracId] = files;
+                cacheDic[pracId] = filename;
 
                 # save to id map
+                obj = {'practiceId': pracId, 'question': question,'filename': filename};
                 if resultDic.has_key(klId):
                     resultDic[klId].append(obj);
                 else:
                     resultDic[klId] = [obj];
 
                 # copy file to dest folder
-                shutil.copyfile(fileDir, uniqueDestFileDir);
-
+                shutil.copyfile(srcFileFullPath, destFileFullPathUnique);
 
 
     dicJs = json.dumps(resultDic);
