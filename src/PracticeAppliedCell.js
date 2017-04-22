@@ -25,7 +25,7 @@ var reactNativeStore = require('react-native-store');
  var Subscribable = require('Subscribable');
 // var RefreshableListView = require('react-native-refreshable-listview');
 
-var PracticeCell = React.createClass({
+var PracticeAppliedCell = React.createClass({
 
   propTypes: {
     question: React.PropTypes.object,
@@ -101,9 +101,6 @@ var PracticeCell = React.createClass({
     var desc = this.props.question.msg.description || "";
     var regex = /(&nbsp;|<([^>]+)>)/ig;
     desc = desc.replace(regex, "");
-
-    var readOrNot = this.state.readed ? styles.circleRead : styles.circleUnread;
-    var latestDate = "1 min ago";//moment(this.props.question.conversation.last_post_time).fromNow();
     
     return (
       <View>
@@ -112,9 +109,6 @@ var PracticeCell = React.createClass({
           onShowUnderlay={this.props.onHighlight}
           onHideUnderlay={this.props.onUnhighlight}>
           <View style={styles.flexContainer}>
-            <View style={styles.fixedCell}>
-              <View style={readOrNot}></View>
-            </View>
             <View style={styles.flexCell}>
               <Text style={styles.qTitle} numberOfLines={2}>{this.props.question.msg.topic}</Text>
               <Text style={styles.qDescription} numberOfLines={100}>{desc}</Text>            
@@ -133,7 +127,7 @@ var styles = StyleSheet.create({
   },
   flexCell:{
     flexDirection: 'column',
-    marginLeft: 24,
+    marginLeft: 5,
     marginTop: 5,
     marginBottom: 5,
     marginRight: 5,
@@ -262,4 +256,4 @@ var styles = StyleSheet.create({
   
 });
 
-module.exports = PracticeCell;
+module.exports = PracticeAppliedCell;

@@ -17,16 +17,14 @@ import { Navigator,
         PixelRatio } from 'react-native';
 
 var Subscribable = require('Subscribable');
-var PracticeCell = require('./PracticeCell');
+var ChoiceCell = require('./ChoiceCell');
 
-var AnswerList = require('./AnswerList');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-import RNFetchBlob from 'react-native-fetch-blob'
 
 
-var PracticeList = React.createClass({
+var ChoiceList = React.createClass({
 
   mixins: [Subscribable.Mixin],
 
@@ -37,78 +35,22 @@ var PracticeList = React.createClass({
       noMore: false,
       cache: {offset: 0, items:[]}, 
       filterIndex : 0,
-      filterTitle : 'Most recents'
+      filterTitle : 'Choices:'
     };
   },
 
   reloadData() {
     this.state.noMore = false;
-
-    var practicesIds = this.props.practices;
-    const dirs = RNFetchBlob.fs.dirs;
-
-    var that = this;
-    practicesIds.forEach(function(e){
-      var infoName = '/practice_applied_info_' + e + '.json';
-      const filePath = dirs.MainBundleDir + infoName;
-      console.log(infoName);
-
-      RNFetchBlob.fs.readFile(filePath, 'utf8')
-      .then((data) => {
-        // handle the data ..
-        data = JSON.parse(data);
-
-        that.state.cache.items.push(data);
-
-        that.updateDataSourceHandler(that.state.cache.items, 0);
-      });
-
-    });
-
+    this.appendData(1);
   },
 
-  appendData() {
-    console.log("listview appendData");
+  appendData(offsetInt) {
+
+    this.state.cache.items.push(...this.props.choices);
+    this.updateDataSourceHandler(this.state.cache.items, 0);
   },
-
-  reloadMostViewedInNDays(append){
-
-    var offset = 0;
-    if (append) {
-      offset = this.state.cache.offset + 1;
-    };
-    var boardId = this.props.board.id;
-    var that = this;
-    return Gateway.mostViewedInNDays(7, boardId, offset, (items) => {
-      if (append) {
-        if (items.length === 0) {
-          that.state.noMore = true;
-        }        
-        that.state.cache.items.push(...items);
-        items = that.state.cache.items;
-      };
-      return this.updateDataSourceHandler(items, offset);
-    }); 
-  },
-
-
 
   componentDidMount() {
-    //this.addListenerOn(this.props.events, 'filterEvent', this.onHandlerFilter);
-    this.reloadData();
-  },
-
-  onHandlerFilter: function(args){
-    if (args.title === "Cancel") {
-      return;
-    }
-
-    this.state.filterIndex = args.index;
-    this.setState({
-      loaded: false,
-      filterTitle: args.title,
-    });
-
     this.reloadData();
   },
 
@@ -165,7 +107,7 @@ var PracticeList = React.createClass({
 
   renderCell(question) {
     return (
-      <PracticeCell 
+      <ChoiceCell 
         onSelect={() => this.onCellSelected(question)}
         question={question}
       />
@@ -175,13 +117,13 @@ var PracticeList = React.createClass({
 
   onCellSelected : function(message : Object){
 
-    if (Platform.OS === 'ios') {
-      this.props.navigator.push({
-        title: "Answers",
-        component: AnswerList,
-        passProps: {message},
-      });
-    }
+    // if (Platform.OS === 'ios') {
+    //   this.props.navigator.push({
+    //     title: "Message",
+    //     component: QuestionsDetail,
+    //     passProps: {message},
+    //   });
+    // }
   },
 
 });
@@ -220,4 +162,4 @@ var styles = StyleSheet.create({
   },  
 });
 
-module.exports = PracticeList;
+module.exports = ChoiceList;

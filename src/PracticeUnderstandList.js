@@ -17,20 +17,16 @@ import { Navigator,
         PixelRatio } from 'react-native';
 
 var Subscribable = require('Subscribable');
-var ChapterCell = require('./ChapterCell');
-
-var PracticeAppliedList = require('./PracticeAppliedList');
-var PracticeUnderstandList = require('./PracticeUnderstandList');
-var PracticeDetail = require('./PracticeDetail');
+var PracticeUnderstandCell = require('./PracticeUnderstandCell');
+var PracticeUnderstandAnswerDetail = require('./PracticeUnderstandAnswerDetail');
 
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-import KnowledgePractices from '../data/knowledge_practices.json';  
-import KnowledgeUnderstands from '../data/unique_understand_ids.json';  
+import RNFetchBlob from 'react-native-fetch-blob'
 
 
-var ChapterList = React.createClass({
+var PracticeUnderstandList = React.createClass({
 
   mixins: [Subscribable.Mixin],
 
@@ -41,44 +37,20 @@ var ChapterList = React.createClass({
       noMore: false,
       cache: {offset: 0, items:[]}, 
       filterIndex : 0,
-      filterTitle : 'Most recents'
+      filterTitle : '巩固练习'
     };
   },
 
   reloadData() {
-    this.state.noMore = false;
 
-    var items = this.props.message.chapterList;
-    var offset = 0;
-
-    this.updateDataSourceHandler(items, offset);
+    this.state.cache.items.push(...this.props.data);
+    this.updateDataSourceHandler(this.state.cache.items, 0);
 
   },
 
   appendData() {
     console.log("listview appendData");
   },
-
-  reloadMostViewedInNDays(append){
-
-    var offset = 0;
-    if (append) {
-      offset = this.state.cache.offset + 1;
-    };
-    var boardId = this.props.board.id;
-    var that = this;
-    return Gateway.mostViewedInNDays(7, boardId, offset, (items) => {
-      if (append) {
-        if (items.length === 0) {
-          that.state.noMore = true;
-        }        
-        that.state.cache.items.push(...items);
-        items = that.state.cache.items;
-      };
-      return this.updateDataSourceHandler(items, offset);
-    }); 
-  },
-
 
 
   componentDidMount() {
@@ -123,6 +95,7 @@ var ChapterList = React.createClass({
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}
         renderSeparator={this.renderSeparator} 
+        renderSectionHeader={this.renderSectionHeader}               
       />
     );
 
@@ -151,9 +124,8 @@ var ChapterList = React.createClass({
   },
 
   renderCell(question) {
-
     return (
-      <ChapterCell 
+      <PracticeUnderstandCell 
         onSelect={() => this.onCellSelected(question)}
         question={question}
       />
@@ -163,22 +135,11 @@ var ChapterList = React.createClass({
 
   onCellSelected : function(message : Object){
 
-    var knowId = message.sections[0].knowledge.id;
-    var practicesApplied = KnowledgePractices[knowId];
-    var practicesUnderstand = KnowledgeUnderstands[knowId];
-    var knowledge = message.sections[0].knowledge;
-
-    var practice = {
-      'applied': practicesApplied,
-      'understand': practicesUnderstand,
-      'knowledge': knowledge
-    };
-
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: "Practices",
-        component: PracticeDetail,
-        passProps: {practice},
+        title: "Answers",
+        component: PracticeUnderstandAnswerDetail,
+        passProps: {message},
       });
     }
   },
@@ -219,4 +180,4 @@ var styles = StyleSheet.create({
   },  
 });
 
-module.exports = ChapterList;
+module.exports = PracticeUnderstandList;

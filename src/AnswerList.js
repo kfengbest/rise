@@ -68,44 +68,8 @@ var AnswerList = React.createClass({
       });
   },
 
-  reloadMostViewedInNDays(append){
-
-    var offset = 0;
-    if (append) {
-      offset = this.state.cache.offset + 1;
-    };
-    var boardId = this.props.board.id;
-    var that = this;
-    return Gateway.mostViewedInNDays(7, boardId, offset, (items) => {
-      if (append) {
-        if (items.length === 0) {
-          that.state.noMore = true;
-        }        
-        that.state.cache.items.push(...items);
-        items = that.state.cache.items;
-      };
-      return this.updateDataSourceHandler(items, offset);
-    }); 
-  },
-
-
-
   componentDidMount() {
     //this.addListenerOn(this.props.events, 'filterEvent', this.onHandlerFilter);
-    this.reloadData();
-  },
-
-  onHandlerFilter: function(args){
-    if (args.title === "Cancel") {
-      return;
-    }
-
-    this.state.filterIndex = args.index;
-    this.setState({
-      loaded: false,
-      filterTitle: args.title,
-    });
-
     this.reloadData();
   },
 
@@ -132,7 +96,6 @@ var AnswerList = React.createClass({
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}
         renderSeparator={this.renderSeparator} 
-        renderSectionHeader={this.renderSectionHeader}               
       />
     );
 

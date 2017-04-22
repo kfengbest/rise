@@ -17,20 +17,16 @@ import { Navigator,
         PixelRatio } from 'react-native';
 
 var Subscribable = require('Subscribable');
-var ChapterCell = require('./ChapterCell');
+var PracticeAppliedCell = require('./PracticeAppliedCell');
 
-var PracticeAppliedList = require('./PracticeAppliedList');
-var PracticeUnderstandList = require('./PracticeUnderstandList');
-var PracticeDetail = require('./PracticeDetail');
-
+var AnswerList = require('./AnswerList');
 var Gateway = require('./Gateway');
 var Config = require('./Config');
 
-import KnowledgePractices from '../data/knowledge_practices.json';  
-import KnowledgeUnderstands from '../data/unique_understand_ids.json';  
+import RNFetchBlob from 'react-native-fetch-blob'
 
 
-var ChapterList = React.createClass({
+var PracticeAppliedList = React.createClass({
 
   mixins: [Subscribable.Mixin],
 
@@ -41,17 +37,33 @@ var ChapterList = React.createClass({
       noMore: false,
       cache: {offset: 0, items:[]}, 
       filterIndex : 0,
-      filterTitle : 'Most recents'
+      filterTitle : '应用练习'
     };
   },
 
   reloadData() {
     this.state.noMore = false;
 
-    var items = this.props.message.chapterList;
-    var offset = 0;
+    var practicesIds = this.props.data;
+    const dirs = RNFetchBlob.fs.dirs;
 
-    this.updateDataSourceHandler(items, offset);
+    var that = this;
+    practicesIds.forEach(function(e){
+      var infoName = '/practice_applied_info_' + e + '.json';
+      const filePath = dirs.MainBundleDir + infoName;
+      console.log(infoName);
+
+      RNFetchBlob.fs.readFile(filePath, 'utf8')
+      .then((data) => {
+        // handle the data ..
+        var dataItem = JSON.parse(data);
+
+        that.state.cache.items.push(dataItem);
+
+        that.updateDataSourceHandler(that.state.cache.items, 0);
+      });
+
+    });
 
   },
 
@@ -123,6 +135,7 @@ var ChapterList = React.createClass({
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}
         renderSeparator={this.renderSeparator} 
+        renderSectionHeader={this.renderSectionHeader}               
       />
     );
 
@@ -151,9 +164,8 @@ var ChapterList = React.createClass({
   },
 
   renderCell(question) {
-
     return (
-      <ChapterCell 
+      <PracticeAppliedCell 
         onSelect={() => this.onCellSelected(question)}
         question={question}
       />
@@ -163,22 +175,11 @@ var ChapterList = React.createClass({
 
   onCellSelected : function(message : Object){
 
-    var knowId = message.sections[0].knowledge.id;
-    var practicesApplied = KnowledgePractices[knowId];
-    var practicesUnderstand = KnowledgeUnderstands[knowId];
-    var knowledge = message.sections[0].knowledge;
-
-    var practice = {
-      'applied': practicesApplied,
-      'understand': practicesUnderstand,
-      'knowledge': knowledge
-    };
-
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: "Practices",
-        component: PracticeDetail,
-        passProps: {practice},
+        title: "Answers",
+        component: AnswerList,
+        passProps: {message},
       });
     }
   },
@@ -219,4 +220,4 @@ var styles = StyleSheet.create({
   },  
 });
 
-module.exports = ChapterList;
+module.exports = PracticeAppliedList;
