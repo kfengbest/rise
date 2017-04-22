@@ -2,6 +2,7 @@ import urllib2
 import time
 import json
 import os
+import shutil
 
 from random import Random
 
@@ -40,7 +41,7 @@ def pullpage(subId):
     req.add_header('Cookie','_ga=GA1.2.108208881.1488618536; _qt=6ovqb5vmjiuq3mxr6zdp5ubl7rkiauiox3b6rx0go59ka7guu5fzdor60xbq0p79jq4b8ppwt8ajkocavh8ztrmqvmke827ilce; Hm_lvt_64c8a6d40ec075c726072cd243d008a3=1489753427,1489815307; Hm_lpvt_64c8a6d40ec075c726072cd243d008a3=1490096995; JSESSIONID=CECE0760DFE30447EEB8C7645C3913AF')
     res=urllib2.urlopen(req)
     the_page=res.read()
-    name=sid+".txt"
+    name=sid+".json"
     savedFile = open(name, 'w+')
     print >> savedFile,the_page
 
@@ -49,7 +50,7 @@ def pullAnswers(subId):
 #    url="http://www.iquanwai.com/pc/fragment/application/mine/967/" + sid;
     url="http://www.iquanwai.com/pc/fragment/application/list/other/" + sid
 
-    name=sid+".txt"
+    name=sid+".json"
     savedFile = open(name, 'a')
 
     for pageId in range(1,6):
@@ -75,7 +76,7 @@ def pullDetailedAnswer(subId):
 
     jo = json.loads(the_page)
     if jo['code'] == 200 :
-        name=sid+".txt"
+        name=sid+".json"
         savedFile = open(name, 'w+')
         print >> savedFile,the_page
         savedFile.close()
@@ -91,7 +92,7 @@ def loadUnchoosen():
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='unchoosen.txt'
+        fileName='unchoosen.json'
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -107,7 +108,7 @@ def loadKnowledge(knowledgeId):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='knowledge_' + sid + ".txt"
+        fileName='knowledge_' + sid + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -122,7 +123,7 @@ def loadProblem(problemId):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='problem_' + sid + ".txt"
+        fileName='problem_' + sid + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -137,7 +138,7 @@ def loadCurrentPlan(pageNum):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='history_plan_' + sid + ".txt"
+        fileName='history_plan_' + sid + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -154,7 +155,7 @@ def loadPracticeKnowledge(practicePlanId):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='practice_Knowledge_' + sid + ".txt"
+        fileName='practice_Knowledge_' + sid + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -170,7 +171,7 @@ def loadPracticeUnderstand(practicePlanId):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='practice_Understand_' + sid + ".txt"
+        fileName='practice_Understand_' + sid + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -186,7 +187,7 @@ def loadPracticeAppliedInfo(practicePlanId):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='practice_applied_info_' + sid + ".txt"
+        fileName='practice_applied_info_' + sid + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -204,7 +205,7 @@ def loadPracticeAppliedAnswer(practicePlanId, pageNum):
 
     jsPayload = json.loads(payload)
     if jsPayload['code'] == 200 :
-        fileName='practice_applied_answer_'+ sid + "_" + snum + ".txt"
+        fileName='practice_applied_answer_'+ sid + "_" + snum + ".json"
         savedFile=open(fileName,'w+')
         print >> savedFile,payload
         savedFile.close()
@@ -216,13 +217,25 @@ def loadPracticeAppliedAnswer(practicePlanId, pageNum):
 
 def loadAllAppliedPractices():
     for i in range(1,250):
-        loadPracticeAppliedInfo(i)
+        #loadPracticeAppliedInfo(i)
         loadPracticeAppliedAnswer(i,1)
-        time.sleep(1)
+        time.sleep(0.3)
+        print str(i)
+
+def loadAllProblems():
+    for i in range(1,50):
+        loadProblem(i)
+        time.sleep(0.3)
+        print str(i)
+
+def loadAllPracticeUnderstand():
+    for i in range(240,1000):
+        loadPracticeUnderstand(i)
+        time.sleep(0.5)
         print str(i)
 
 def rename():
-    path = '/Users/fengka/Sites/rise/data/files';
+    path = '/Users/fengka/Sites/rise/data/practices';
     filelist=os.listdir(path);
     for files in filelist:
         olddir=os.path.join(path,files);
@@ -241,10 +254,7 @@ def loadJson(filePath):
     dashboardHandler.close();
     return dashboardJson;
 
-def extractAndMapIds():
- #   dashboardFile='/Users/fengka/Sites/rise/data/unchoosen.json';
- #   dashboardJson = loadJson(dashboardFile);
- #   print dashboardJson['msg']['name'];
+def extractAppliedPracticeIds():
 
     #{'49':[101,102]}
     dic = {};
@@ -266,8 +276,79 @@ def extractAndMapIds():
     dicFile = open('dicmap.json','w');
     dicFile.write(dicJs);
     dicFile.close();
-            
 
+def extractUnderstandPracticeIds():
+
+    #{'49':[101,102]}
+    dic = {};
+    path = '/Users/fengka/Sites/rise/data/understands';
+    filelist=os.listdir(path);
+    for files in filelist:
+        fileDir=os.path.join(path,files);
+        fileJson = loadJson(fileDir);
+
+        practiceArr = fileJson['msg']['practice'];
+        for practice in practiceArr:
+            klId = practice['knowledgeId'];
+            pracId = practice['id'];
+            
+            obj = {'practiceId': pracId, 'file': files};
+
+            if dic.has_key(klId):
+                dic[klId].append(obj);
+            else:
+                dic[klId] = [obj];
+
+    dicJs = json.dumps(dic);
+    dicFile = open('knowledge_understand.json','w');
+    dicFile.write(dicJs);
+    dicFile.close();
+                        
+def uniqueUnderstandPracticeIds():
+
+    #{'49':[101,102]}
+    cacheDic = {};
+    resultDic = {};
+    srcDir = '/Users/fengka/Sites/rise/data/understands';
+    destDir = '/Users/fengka/Sites/rise/data/uniqueunderstands';
+    filelist=os.listdir(srcDir);
+    for files in filelist:
+        fileDir=os.path.join(srcDir,files);
+        uniqueDestFileDir = os.path.join(destDir,files);
+
+        fileJson = loadJson(fileDir);
+
+        practiceArr = fileJson['msg']['practice'];
+        for practice in practiceArr:
+            klId = practice['knowledgeId'];
+            pracId = practice['id'];
+            
+            obj = {'practiceId': pracId, 'file': files};
+
+            print obj;
+
+            if cacheDic.has_key(pracId):
+                print str(pracId) + "  " + files;
+            else:
+                # put into cache
+                cacheDic[pracId] = files;
+
+                # save to id map
+                if resultDic.has_key(klId):
+                    resultDic[klId].append(obj);
+                else:
+                    resultDic[klId] = [obj];
+
+                # copy file to dest folder
+                shutil.copyfile(fileDir, uniqueDestFileDir);
+
+
+
+    dicJs = json.dumps(resultDic);
+    dicFile = open('unique_understand_ids.json','w');
+    dicFile.write(dicJs);
+    dicFile.close();
+                       
 
 
 
@@ -278,11 +359,16 @@ def extractAndMapIds():
 #loadPracticeKnowledge(51608)
 #loadPracticeUnderstand(51613)
 #loadPracticeAppliedInfo(117)
-#loadPracticeAppliedAnswer(117,1)
+#loadPracticeAppliedAnswer(125,1)
 #rename();
 
 #loadAllAppliedPractices()
+#loadAllProblems()
 
-extractAndMapIds();
+#extractAndMapIds();
 
+#loadAllPracticeUnderstand()
+
+#extractUnderstandPracticeIds()
+uniqueUnderstandPracticeIds();
 

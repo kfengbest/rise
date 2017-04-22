@@ -113,12 +113,12 @@ var ChapterCell = React.createClass({
           onShowUnderlay={this.props.onHighlight}
           onHideUnderlay={this.props.onUnhighlight}>
           <View style={styles.flexContainer}>
-            <View style={styles.fixedCell}>
-              <View style={readOrNot}></View>
-            </View>
             <View style={styles.flexCell}>
               <Text style={styles.qTitle} numberOfLines={2}>{this.props.question.name}</Text>
               <Text style={styles.qDescription} numberOfLines={2}>{desc}</Text>            
+              <Text style={styles.qLatestText} numberOfLines={1}>
+                  <Text style={styles.qViewsNum}>knowledgeId: {this.props.question.sections[0].knowledge.id}</Text>
+              </Text>  
             </View>                      
           </View>
         </TouchableElement>

@@ -177,7 +177,7 @@ var PracticeList = React.createClass({
 
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: "Message",
+        title: "Answers",
         component: AnswerList,
         passProps: {message},
       });

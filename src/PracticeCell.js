@@ -99,7 +99,6 @@ var PracticeCell = React.createClass({
     }
 
     var desc = this.props.question.msg.description || "";
-    desc = desc.substr(0,250);
     var regex = /(&nbsp;|<([^>]+)>)/ig;
     desc = desc.replace(regex, "");
 
@@ -118,7 +117,7 @@ var PracticeCell = React.createClass({
             </View>
             <View style={styles.flexCell}>
               <Text style={styles.qTitle} numberOfLines={2}>{this.props.question.msg.topic}</Text>
-              <Text style={styles.qDescription} numberOfLines={2}>{desc}</Text>            
+              <Text style={styles.qDescription} numberOfLines={100}>{desc}</Text>            
             </View>                      
           </View>
         </TouchableElement>

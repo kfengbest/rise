@@ -165,7 +165,7 @@ var ChapterList = React.createClass({
 
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: "Message",
+        title: "Practices",
         component: PracticeList,
         passProps: {practices},
       });

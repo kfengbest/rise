@@ -164,7 +164,7 @@ var QuestionsList1 = React.createClass({
 
     if (Platform.OS === 'ios') {
       this.props.navigator.push({
-        title: "Message",
+        title: "Chapters",
         component: ChapterList,
         passProps: {message},
       });
