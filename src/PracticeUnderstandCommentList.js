@@ -73,6 +73,7 @@ var PracticeUnderstandCommentList = React.createClass({
 
     return (
       <ListView
+        enableEmptySections={true}            
         style={styles.listView}
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}

@@ -44,7 +44,7 @@ var PracticeAppliedList = React.createClass({
   reloadData() {
     this.state.noMore = false;
 
-    var practicesIds = this.props.data;
+    var practicesIds = this.props.data || [];
     const dirs = RNFetchBlob.fs.dirs;
 
     var that = this;
@@ -71,46 +71,11 @@ var PracticeAppliedList = React.createClass({
     console.log("listview appendData");
   },
 
-  reloadMostViewedInNDays(append){
-
-    var offset = 0;
-    if (append) {
-      offset = this.state.cache.offset + 1;
-    };
-    var boardId = this.props.board.id;
-    var that = this;
-    return Gateway.mostViewedInNDays(7, boardId, offset, (items) => {
-      if (append) {
-        if (items.length === 0) {
-          that.state.noMore = true;
-        }        
-        that.state.cache.items.push(...items);
-        items = that.state.cache.items;
-      };
-      return this.updateDataSourceHandler(items, offset);
-    }); 
-  },
-
-
-
   componentDidMount() {
     //this.addListenerOn(this.props.events, 'filterEvent', this.onHandlerFilter);
     this.reloadData();
   },
 
-  onHandlerFilter: function(args){
-    if (args.title === "Cancel") {
-      return;
-    }
-
-    this.state.filterIndex = args.index;
-    this.setState({
-      loaded: false,
-      filterTitle: args.title,
-    });
-
-    this.reloadData();
-  },
 
   updateDataSourceHandler(items, offset) {
 
@@ -131,6 +96,7 @@ var PracticeAppliedList = React.createClass({
 
     return (
       <ListView
+        enableEmptySections={true}            
         style={styles.listView}
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}

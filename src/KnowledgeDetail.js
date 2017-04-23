@@ -81,6 +81,11 @@ var KnowledgeDetail = React.createClass({
           <View style={styles.flexCell}>   
 
             <View style={styles.listHeader}>
+              <Text style={styles.listHeaderText}>语音:</Text>
+            </View>
+            <Text style={styles.qDescription} numberOfLines={1}>{this.props.message.audio}</Text>           
+          
+            <View style={styles.listHeader}>
               <Text style={styles.listHeaderText}>作用:</Text>
             </View>
             <Text style={styles.qDescription} numberOfLines={500}>{analysis}</Text>           
@@ -121,7 +126,7 @@ var styles = StyleSheet.create({
   },
   flexCell:{
     flexDirection: 'column',
-    marginLeft: 24,
+    marginLeft: 5,
     marginTop: 5,
     marginBottom: 5,
     marginRight: 5,

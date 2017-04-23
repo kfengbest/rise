@@ -98,7 +98,7 @@ var ChapterCell = React.createClass({
       TouchableElement = TouchableNativeFeedback;
     }
 
-    var desc = this.props.question.sections[0].name || "";
+    var desc = this.props.question.section.name || "";
     desc = desc.substr(0,250);
     var regex = /(&nbsp;|<([^>]+)>)/ig;
     desc = desc.replace(regex, "");
@@ -114,10 +114,17 @@ var ChapterCell = React.createClass({
           onHideUnderlay={this.props.onUnhighlight}>
           <View style={styles.flexContainer}>
             <View style={styles.flexCell}>
+              <View style={styles.flexCreatorCell}>
+                <Text style={styles.qcreatorText}>
+                  chapter: {this.props.question.chapter}
+                  {' '}&bull;{' '}
+                  <Text>section: {this.props.question.section.section}</Text>                
+                </Text>
+              </View>             
               <Text style={styles.qTitle} numberOfLines={2}>{this.props.question.name}</Text>
               <Text style={styles.qDescription} numberOfLines={2}>{desc}</Text>            
               <Text style={styles.qLatestText} numberOfLines={1}>
-                  <Text style={styles.qViewsNum}>knowledgeId: {this.props.question.sections[0].knowledge.id}</Text>
+                <Text style={styles.qViewsNum}>knowledgeId: {this.props.question.section.knowledge.id}</Text>
               </Text>  
             </View>                      
           </View>

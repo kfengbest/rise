@@ -46,12 +46,32 @@ var ChapterList = React.createClass({
   },
 
   reloadData() {
-    this.state.noMore = false;
+    var chapters = this.props.message.chapterList;
+    var items = [];
+    chapters.forEach(function(e){
+      e.sections.forEach(function(s){
+        var chapter = {
+          chapter: e.chapter,
+          section: s,
+          name: e.name,
+          integrated: e.integrated
+        };
+        items.push(chapter);        
+      });
+    });
+    // for(var e in chapters){
+    //   for(var section in e.sections){
+    //     var chapter = {
+    //       chapter: e.chapter,
+    //       section: section,
+    //       name: e.name,
+    //       integrated: e.integrated
+    //     };
+    //     items.append(chapter);
+    //   }      
+    // }
 
-    var items = this.props.message.chapterList;
-    var offset = 0;
-
-    this.updateDataSourceHandler(items, offset);
+    this.updateDataSourceHandler(items, 0);
 
   },
 
@@ -86,20 +106,6 @@ var ChapterList = React.createClass({
     this.reloadData();
   },
 
-  onHandlerFilter: function(args){
-    if (args.title === "Cancel") {
-      return;
-    }
-
-    this.state.filterIndex = args.index;
-    this.setState({
-      loaded: false,
-      filterTitle: args.title,
-    });
-
-    this.reloadData();
-  },
-
   updateDataSourceHandler(items, offset) {
 
     this.setState({
@@ -119,6 +125,7 @@ var ChapterList = React.createClass({
 
     return (
       <ListView
+        enableEmptySections={true}      
         style={styles.listView}
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}
@@ -163,10 +170,10 @@ var ChapterList = React.createClass({
 
   onCellSelected : function(message : Object){
 
-    var knowId = message.sections[0].knowledge.id;
+    var knowId = message.section.knowledge.id;
     var practicesApplied = KnowledgePractices[knowId];
     var practicesUnderstand = KnowledgeUnderstands[knowId];
-    var knowledge = message.sections[0].knowledge;
+    var knowledge = message.section.knowledge;
 
     var practice = {
       'applied': practicesApplied,

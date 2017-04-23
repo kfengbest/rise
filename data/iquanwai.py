@@ -234,6 +234,20 @@ def loadAllPracticeUnderstand():
         time.sleep(0.5)
         print str(i)
 
+def downloadAudio(fileUrl):
+    urlPrefix="http://www.iqycamp.com/audio/";
+    nLen = len(urlPrefix);
+    fileName = fileUrl[nLen:];
+    
+    print fileName;
+
+    f = urllib2.urlopen(fileUrl) 
+    data = f.read() 
+    with open(fileName, "wb") as code:     
+        code.write(data)
+
+    time.sleep(3);
+
 def rename():
     path = '/Users/fengka/Sites/rise/data/practices';
     filelist=os.listdir(path);
@@ -303,7 +317,38 @@ def extractUnderstandPracticeIds():
     dicFile = open('knowledge_understand.json','w');
     dicFile.write(dicJs);
     dicFile.close();
-                        
+      
+def extractAudios():
+    urlPrefix = 'http://www.iqycamp.com/audio/';
+    nLen = len(urlPrefix);
+
+    unchoosenPath = '/Users/fengka/Sites/rise/data/unchoosen.json';
+    unchoosenJson = loadJson(unchoosenPath);
+
+    audioList = [];
+    for catalog in unchoosenJson['msg']['catalogList']:
+        for problem in catalog['problemList']:
+            pAudio = problem['audio'];
+            print pAudio;
+            if pAudio != None:
+                audioList.append(pAudio);
+
+            chapterList = problem['chapterList'];
+            for chapter in chapterList:
+                sections = chapter['sections'];
+                for section in sections:
+                    knowledge = section['knowledge'];
+                    pAudio2 = knowledge['audio'];
+                    print pAudio2;
+                    if pAudio2 != None:
+                        audioList.append(pAudio2);
+
+    for str in audioList:
+        print str;
+        downloadAudio(str);
+        time.sleep(0.5)
+
+
 def uniqueUnderstandPracticeIds():
 
     #{'49':[101,102]}
@@ -366,5 +411,8 @@ def uniqueUnderstandPracticeIds():
 #loadAllPracticeUnderstand()
 
 #extractUnderstandPracticeIds()
-uniqueUnderstandPracticeIds();
+#uniqueUnderstandPracticeIds();
 
+#downloadAudio("rise_k44.m4a");
+
+#extractAudios();

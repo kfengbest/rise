@@ -58,20 +58,6 @@ var PracticeUnderstandList = React.createClass({
     this.reloadData();
   },
 
-  onHandlerFilter: function(args){
-    if (args.title === "Cancel") {
-      return;
-    }
-
-    this.state.filterIndex = args.index;
-    this.setState({
-      loaded: false,
-      filterTitle: args.title,
-    });
-
-    this.reloadData();
-  },
-
   updateDataSourceHandler(items, offset) {
 
     this.setState({
@@ -91,6 +77,7 @@ var PracticeUnderstandList = React.createClass({
 
     return (
       <ListView
+        enableEmptySections={true}            
         style={styles.listView}
         dataSource={this.state.dataSource}
         renderRow={this.renderCell}
