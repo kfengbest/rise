@@ -2634,6 +2634,14 @@
 			path = infos;
 			sourceTree = "<group>";
 		};
+		120B81192113D569009BCA9E /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				8F1ED16334D34FEB86D226E7 /* libRNFetchBlob.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		122826AB1EAB4E6800A2F904 /* uniqueunderstands */ = {
 			isa = PBXGroup;
 			children = (
@@ -2917,6 +2925,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* riseTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				120B81192113D569009BCA9E /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";

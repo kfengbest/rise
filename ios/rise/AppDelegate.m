@@ -18,12 +18,12 @@
 {
   NSURL *jsCodeLocation;
 
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+  //jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
   //jsCodeLocation = [NSURL URLWithString:@"http://10.148.214.55:8081/index.ios.bundle"];
 
 
   // step 1:  uncomment this line to build release bundle.
-  //jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 
   // step 2: run following in cmd.
   // react-native bundle --entry-file ./index.ios.js --bundle-output ./ios/main.jsbundle --platform ios --assets-dest ./ios/bundle --dev false
